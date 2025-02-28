@@ -13,7 +13,7 @@ export const NavHeader = () => {
         <Link href="/">
           <a className="hover:opacity-80 transition-opacity">
             <img 
-              src="./attached_assets/Blue Modern Letter C Tech Logo.png" 
+              src="/assets/logo.png" 
               alt="Company Logo" 
               className="h-10 w-auto"
             />
