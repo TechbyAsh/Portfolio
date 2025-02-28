@@ -11,8 +11,12 @@ export const NavHeader = () => {
     >
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/">
-          <a className="text-2xl font-bold hover:opacity-80 transition-opacity">
-            AppCreator
+          <a className="hover:opacity-80 transition-opacity">
+            <img 
+              src="/attached_assets/Blue Modern Letter C Tech Logo.png" 
+              alt="Company Logo" 
+              className="h-10 w-auto"
+            />
           </a>
         </Link>
         <div className="flex gap-8">
