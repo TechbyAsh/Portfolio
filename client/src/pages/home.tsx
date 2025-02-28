@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { GradientBackground } from "@/components/ui/gradient-background";
-import { ProjectCard } from "@/components/project-card";
+import { ProjectCarousel } from "@/components/project-carousel";
 import { CaseStudy } from "@/components/case-study";
 import { ContactForm } from "@/components/contact-form";
 import { NavHeader } from "@/components/nav-header";
@@ -71,18 +71,12 @@ export default function Home() {
           className="mb-20"
         >
           <h2 className="text-3xl font-bold mb-10 text-center">Featured Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                title={project.title}
-                description={project.description}
-                image={project.image}
-                category={project.category}
-                onClick={() => setSelectedProject(project)}
-              />
-            ))}
-          </div>
+          <ProjectCarousel
+            projects={projects.map(project => ({
+              ...project,
+              onClick: () => setSelectedProject(project)
+            }))}
+          />
         </motion.section>
 
         <motion.section
