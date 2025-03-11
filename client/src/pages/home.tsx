@@ -6,6 +6,8 @@ import { CaseStudy } from "@/components/case-study";
 import { ContactForm } from "@/components/contact-form";
 import { NavHeader } from "@/components/nav-header";
 import { SkillProgress } from "@/components/skill-progress";
+import Skills3D from "@/components/skills-3d"; // Assuming this component is defined elsewhere
+
 
 const projects = [
   {
@@ -71,7 +73,7 @@ export default function Home() {
               ease: "easeInOut" 
             }}
           />
-          
+
           <motion.div 
             className="absolute -z-10 w-72 h-72 rounded-full bg-blue-500/5 bottom-0 right-1/4 blur-3xl"
             animate={{ 
@@ -86,7 +88,7 @@ export default function Home() {
               delay: 1
             }}
           />
-          
+
           {/* Main content with staggered animations */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -122,7 +124,7 @@ export default function Home() {
                 Mobile Experiences
               </motion.span>
             </motion.h1>
-            
+
             <motion.p 
               className="text-xl text-muted-foreground max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
@@ -132,7 +134,7 @@ export default function Home() {
               I'm a mobile app developer passionate about creating thoughtful and visually stunning
               digital experiences that users love.
             </motion.p>
-            
+
             <motion.div
               className="mt-8"
               initial={{ opacity: 0, y: 20 }}
@@ -174,7 +176,39 @@ export default function Home() {
           className="mb-20"
         >
           <h2 className="text-3xl font-bold mb-10 text-center">Technical Skills</h2>
-          <SkillProgress />
+          {/* Skills section */}
+          <section className="py-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold mb-4">Skills & Technologies</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                I've worked with a range of technologies in the mobile app development world,
+                from back-end to design.
+              </p>
+            </motion.div>
+
+            {/* 3D Skills Visualization */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h3 className="text-xl font-medium text-center mb-6">Interactive Skills Globe</h3>
+              <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-4 rounded-xl shadow-xl">
+                <Skills3D />
+              </div>
+            </motion.div>
+
+            {/* Regular Skills Progress Bars */}
+            <SkillProgress />
+          </section>
         </motion.section>
 
         <motion.section
