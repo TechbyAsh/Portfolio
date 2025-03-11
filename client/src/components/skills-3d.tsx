@@ -28,42 +28,40 @@ const SkillSphere = ({ skill }: { skill: Skill }) => {
     (Math.random() - 0.5) * 5,
     (Math.random() - 0.5) * 5,
     (Math.random() - 0.5) * 5
-  ];
+  ] as [number, number, number];
 
   const scale = 0.5 + (skill.level / 100) * 0.5;
 
   return (
-    <mesh position={position as [number, number, number]} scale={scale}>
+    <mesh position={position} scale={scale}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial color={skill.color} />
-      <Html distanceFactor={10}>
-        <div className="skill-label">
-          {skill.name}
-        </div>
-      </Html>
+      <SkillLabel position={[0, 1.5, 0]}>
+        {skill.name}
+      </SkillLabel>
     </mesh>
   );
 };
 
-// HTML content in 3D space
-const Html = ({ children, distanceFactor, position = [0, 0, 0], ...props }: any) => {
+// Import HTML component from drei instead of creating our own
+import { Html as DreiHtml } from "@react-three/drei";
+
+// Use the drei HTML component which is compatible with R3F
+const SkillLabel = ({ children, position }: any) => {
   return (
-    <group position={position as [number, number, number]} {...props}>
-      <div className="html-content" style={{
-        position: 'absolute',
+    <DreiHtml position={position} center distanceFactor={10}>
+      <div className="skill-label" style={{
         fontSize: '12px',
         padding: '6px',
         backgroundColor: 'rgba(0,0,0,0.8)',
         borderRadius: '4px',
         color: 'white',
-        transform: `scale(${distanceFactor / 10})`,
-        transformOrigin: 'center center',
         textAlign: 'center',
         pointerEvents: 'none'
       }}>
         {children}
       </div>
-    </group>
+    </DreiHtml>
   );
 };
 
