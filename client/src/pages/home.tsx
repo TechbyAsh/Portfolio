@@ -108,7 +108,7 @@ export default function Home() {
               <motion.img 
                 src="/assets/logo.png"
                 alt="Naomi Creates Logo"
-                className="h-24 w-auto mx-auto mb-6"
+                className="h-32 w-auto mx-auto mb-6" 
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
                 onError={(e) => {
