@@ -7,6 +7,7 @@ import { ContactForm } from "@/components/contact-form";
 import { NavHeader } from "@/components/nav-header";
 import { SkillProgress } from "@/components/skill-progress";
 import Skills3D from "@/components/skills-3d";
+import { AboutMe } from "@/components/about-me";
 
 const projects = [
   {
@@ -152,10 +153,21 @@ export default function Home() {
         </motion.section>
 
         <motion.section
-          id="projects"
+          id="about"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
+          className="mb-20"
+        >
+          <h2 className="text-3xl font-bold mb-10 text-center">About Me</h2>
+          <AboutMe />
+        </motion.section>
+
+        <motion.section
+          id="projects"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
           className="mb-20"
         >
           <h2 className="text-3xl font-bold mb-10 text-center">Featured Projects</h2>
