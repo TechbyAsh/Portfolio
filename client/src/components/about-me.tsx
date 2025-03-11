@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
@@ -12,7 +11,7 @@ export const AboutMe = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  
+
   // Highlights/keywords you want to emphasize
   const highlights: Highlight[] = [
     { text: "Mobile Apps", color: "primary" },
@@ -50,7 +49,7 @@ export const AboutMe = () => {
           ease: "easeInOut" 
         }}
       />
-      
+
       <motion.div 
         className="absolute -z-10 w-72 h-72 rounded-full bg-blue-500/5 -bottom-20 -right-20 blur-3xl"
         animate={{ 
@@ -64,11 +63,11 @@ export const AboutMe = () => {
           delay: 1
         }}
       />
-      
+
       <div className="backdrop-blur-md bg-white/5 p-8 sm:p-12 rounded-2xl shadow-[0_8px_32px_rgba(31,38,135,0.15)] border border-white/10">
         {/* Photo and content side by side on larger screens */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-          {/* Photo with animated border */}
+          {/* Animated Avatar */}
           <motion.div 
             className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden flex-shrink-0"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -81,21 +80,47 @@ export const AboutMe = () => {
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             >
-              <div className="bg-slate-900 h-full w-full rounded-full">
-                {/* Replace with your actual image */}
-                <img 
-                  src="/assets/profile-photo.jpg" 
-                  alt="Profile" 
-                  className="h-full w-full object-cover rounded-full"
-                  onError={(e) => {
-                    // Fallback if image doesn't exist
-                    e.currentTarget.src = 'https://via.placeholder.com/200x200?text=Your+Photo';
+              <div className="bg-slate-900 h-full w-full rounded-full relative overflow-hidden">
+                {/* Animated character */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ y: 10 }}
+                  animate={{ y: [-5, 5, -5] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
                   }}
-                />
+                >
+                  {/* Replace this with the black girl avatar emoji or custom SVG */}
+                  <span className="text-7xl">👩🏾‍💻</span>
+                </motion.div>
+
+                {/* Animated sparkles */}
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 bg-white rounded-full"
+                    style={{
+                      top: `${20 + i * 30}%`,
+                      left: `${10 + i * 35}%`
+                    }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.5,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
               </div>
             </motion.div>
           </motion.div>
-          
+
           {/* About me content */}
           <div className="flex-1">
             <motion.h2 
@@ -106,7 +131,7 @@ export const AboutMe = () => {
             >
               About Me
             </motion.h2>
-            
+
             {/* Paragraphs with staggered animation */}
             <div className="space-y-4 mb-6 text-muted-foreground">
               {paragraphs.map((paragraph, index) => (
@@ -120,7 +145,7 @@ export const AboutMe = () => {
                 </motion.p>
               ))}
             </div>
-            
+
             {/* Highlights/keywords */}
             <motion.div 
               className="flex flex-wrap gap-2"
