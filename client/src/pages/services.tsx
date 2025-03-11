@@ -12,6 +12,22 @@ interface Package {
 
 const packages: Package[] = [
   {
+    name: "Visionary Package",
+    price: "$1,000",
+    description: "Perfect for coaches, trainers, and health & wellness entrepreneurs ready to digitize their business",
+    features: [
+      "3-4 Page Full Stack Application",
+      "Custom Business Goal Integration",
+      "User Experience Optimization",
+      "Client Management Features",
+      "Booking & Scheduling System",
+      "Progress Tracking Tools",
+      "Brand Identity Integration",
+      "1 Month Support & Training",
+    ],
+    highlight: true,
+  },
+  {
     name: "Starter App",
     price: "$5,000",
     description: "Perfect for MVPs and simple applications",
@@ -36,7 +52,6 @@ const packages: Package[] = [
       "Performance Optimization",
       "Source Code & Documentation",
     ],
-    highlight: true,
   },
   {
     name: "Enterprise",
@@ -123,8 +138,8 @@ export default function Services() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Card className={`p-6 h-full flex flex-col ${
-                  pkg.highlight 
-                    ? "border-primary shadow-lg scale-105" 
+                  pkg.highlight
+                    ? "border-primary shadow-lg scale-105"
                     : "border-border"
                 }`}>
                   <div className="flex-1">
@@ -140,7 +155,7 @@ export default function Services() {
                       ))}
                     </ul>
                   </div>
-                  <Button 
+                  <Button
                     className="w-full"
                     variant={pkg.highlight ? "default" : "outline"}
                   >
