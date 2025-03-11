@@ -93,6 +93,31 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
+            {/* Animated Logo */}
+            <motion.div
+              className="mb-8"
+              initial={{ scale: 0, rotate: -180, opacity: 0 }}
+              animate={{ scale: 1, rotate: 0, opacity: 1 }}
+              transition={{ 
+                duration: 1.2,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+              }}
+            >
+              <motion.img 
+                src="/assets/logo.png"
+                alt="Naomi Creates Logo"
+                className="h-24 w-auto mx-auto mb-6"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+                onError={(e) => {
+                  console.error('Logo failed to load');
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </motion.div>
+
             <motion.h1 
               className="text-4xl md:text-6xl font-bold mb-6 inline-block"
               initial={{ y: 50 }}
