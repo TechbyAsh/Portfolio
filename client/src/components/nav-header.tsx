@@ -16,6 +16,10 @@ export const NavHeader = () => {
               src="/assets/logo.png" 
               alt="Naomi Creates Logo" 
               className="h-12 w-auto object-contain"
+              onError={(e) => {
+                console.error('Logo failed to load');
+                e.currentTarget.style.display = 'none';
+              }}
             />
           </a>
         </Link>
