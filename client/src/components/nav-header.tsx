@@ -14,8 +14,8 @@ export const NavHeader = () => {
           <a className="hover:opacity-80 transition-opacity">
             <img 
               src="/assets/logo.png" 
-              alt="Company Logo" 
-              className="h-10 w-auto"
+              alt="Naomi Creates Logo" 
+              className="h-12 w-auto object-contain"
             />
           </a>
         </Link>
