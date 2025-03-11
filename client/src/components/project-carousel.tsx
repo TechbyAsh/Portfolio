@@ -22,13 +22,7 @@ export const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: true,
-    draggable: true,
-    speed: 20,
-    autoplay: {
-      delay: 4000,
-      stopOnInteraction: false,
-      stopOnMouseEnter: true,
-    },
+    dragFree: true,
   });
 
   const scrollPrev = useCallback(() => {
@@ -39,13 +33,17 @@ export const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  // Start autoplay when component mounts
   useEffect(() => {
-    if (emblaApi) {
-      emblaApi.on('select', () => {
-        emblaApi.scrollNext();
-      });
-    }
+    if (!emblaApi) return;
+
+    const intervalId = setInterval(() => {
+      if (document.hidden) return; // Don't scroll when tab is not visible
+      emblaApi.scrollNext();
+    }, 4000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [emblaApi]);
 
   return (
