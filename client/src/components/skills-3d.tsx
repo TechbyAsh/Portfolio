@@ -25,15 +25,15 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
   // Set a random initial position based on index
   useEffect(() => {
     const angle = (index / skills.length) * Math.PI * 2;
-    const radius = Math.min(window.innerWidth * 0.15, 150); // Increased radius
-    const centerOffsetX = -40; // Add padding to the left by offsetting the center
+    const radius = Math.min(window.innerWidth * 0.2, 200); // Increased radius even more
+    const centerOffsetX = -60; // Increased left padding
     const x = Math.cos(angle) * radius + centerOffsetX;
     const y = Math.sin(angle) * radius;
     setPosition({ x, y });
   }, [index]);
 
-  // Calculate the size based on skill level (50px to 80px)
-  const size = 50 + (skill.level / 100) * 30;
+  // Calculate the size based on skill level (45px to 75px)
+  const size = 45 + (skill.level / 100) * 30; // Slightly reduced base size
 
   return (
     <motion.div
@@ -52,8 +52,8 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
       animate={{
         opacity: 1,
         scale: 1,
-        x: [0, Math.random() * 30 - 15], // Increased movement range
-        y: [0, Math.random() * 30 - 15], // Increased movement range
+        x: [0, Math.random() * 40 - 20], // Increased movement range
+        y: [0, Math.random() * 40 - 20], // Increased movement range
       }}
       transition={{
         duration: 0.5,
