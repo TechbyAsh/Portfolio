@@ -1,8 +1,8 @@
 
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, OrbitControls } from '@react-three/drei';
+import { Canvas, useFrame, extend } from '@react-three/fiber';
+import * as THREE from 'three';
 
 // Define skill type
 interface Skill3D {
@@ -21,54 +21,64 @@ const skills3d: Skill3D[] = [
   { name: "Express", level: 85, color: "#000000" },
 ];
 
-// Simpler sphere component
-const SkillSphere = ({ index, skill }: { index: number, skill: Skill3D }) => {
-  const ref = useRef<THREE.Mesh>(null);
+// Simple sphere component without using drei
+const SkillSphere = ({ index, skill }: { index: number; skill: Skill3D }) => {
+  const meshRef = useRef<THREE.Mesh>(null);
   
-  // Calculate position based on index to create a circular pattern
-  const angle = (index / skills3d.length) * Math.PI * 2;
+  // Calculate position based on index to spread skills in a circle
   const radius = 3;
+  const angle = (index / skills3d.length) * Math.PI * 2;
   const x = Math.cos(angle) * radius;
   const z = Math.sin(angle) * radius;
-  const y = Math.sin(index * 0.5) * 0.5; // Small vertical variation
   
-  // Scale based on skill level
-  const scale = 0.5 + (skill.level / 100) * 0.5;
-  
-  // Simple animation
+  // Animation
   useFrame((state) => {
-    if (ref.current) {
-      ref.current.position.y = y + Math.sin(state.clock.elapsedTime * 0.5 + index) * 0.3;
-      ref.current.rotation.y += 0.01;
+    if (meshRef.current) {
+      // Simple hover animation
+      meshRef.current.position.y = Math.sin(state.clock.getElapsedTime() + index) * 0.3;
+      // Rotate each sphere
+      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
+    }
+  });
+
+  // Scale based on skill level
+  const scale = 0.3 + (skill.level / 100) * 0.3;
+
+  return (
+    <mesh 
+      ref={meshRef} 
+      position={[x, 0, z]} 
+      scale={[scale, scale, scale]}
+    >
+      <sphereGeometry args={[1, 16, 16]} />
+      <meshStandardMaterial color={skill.color} roughness={0.3} metalness={0.8} />
+    </mesh>
+  );
+};
+
+// Main scene component with lighting and controls
+const SkillsScene: React.FC = () => {
+  const groupRef = useRef<THREE.Group>(null);
+  
+  useFrame((state) => {
+    if (groupRef.current) {
+      // Slowly rotate the entire group of spheres
+      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.1;
     }
   });
 
   return (
-    <group>
-      <Sphere ref={ref} args={[scale, 16, 16]} position={[x, y, z]}>
-        <meshStandardMaterial color={skill.color} />
-      </Sphere>
-      {/* Text labels are removed to simplify */}
-    </group>
-  );
-};
-
-// Main scene component
-const SkillsScene: React.FC = () => {
-  return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
-      <OrbitControls 
-        enableZoom={false}
-        autoRotate
-        autoRotateSpeed={0.5}
-        minPolarAngle={Math.PI / 4}
-        maxPolarAngle={Math.PI * 3/4}
-      />
-      {skills3d.map((skill, index) => (
-        <SkillSphere key={index} index={index} skill={skill} />
-      ))}
+      <pointLight position={[10, 10, 10]} />
+      <directionalLight position={[-5, 5, 5]} intensity={0.5} />
+      
+      <group ref={groupRef}>
+        {skills3d.map((skill, index) => (
+          <SkillSphere key={index} index={index} skill={skill} />
+        ))}
+      </group>
     </>
   );
 };
@@ -80,9 +90,9 @@ const Skills3D: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="w-full h-[500px] rounded-xl overflow-hidden"
+      className="w-full h-[500px] rounded-xl overflow-hidden bg-gray-900"
     >
-      <Canvas>
+      <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
         <SkillsScene />
       </Canvas>
     </motion.div>
