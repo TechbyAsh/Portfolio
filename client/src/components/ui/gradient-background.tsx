@@ -28,13 +28,13 @@ export const GradientBackground = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Floating orbs with parallax effect */}
+      {/* Deep purple gradient orb */}
       <motion.div
-        className="absolute right-[10%] top-[10%] h-[500px] w-[500px] rounded-full bg-purple-200 opacity-50 blur-[80px]"
+        className="absolute right-[10%] top-[10%] h-[500px] w-[500px] rounded-full bg-[#6B46C1] opacity-40 blur-[100px]"
         style={{ x: parallaxX, y: parallaxY }}
         animate={{
           scale: [1, 1.1, 1],
-          opacity: [0.5, 0.6, 0.5],
+          opacity: [0.4, 0.5, 0.4],
         }}
         transition={{
           duration: 8,
@@ -42,12 +42,14 @@ export const GradientBackground = () => {
           repeatType: "reverse",
         }}
       />
+
+      {/* Teal gradient orb */}
       <motion.div
-        className="absolute left-[5%] top-[30%] h-[400px] w-[400px] rounded-full bg-pink-200 opacity-50 blur-[80px]"
+        className="absolute left-[5%] top-[30%] h-[400px] w-[400px] rounded-full bg-[#0D9488] opacity-40 blur-[80px]"
         style={{ x: useTransform(parallaxX, v => v * -1), y: useTransform(parallaxY, v => v * -1) }}
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.5, 0.7, 0.5],
+          opacity: [0.4, 0.5, 0.4],
         }}
         transition={{
           duration: 10,
@@ -56,15 +58,17 @@ export const GradientBackground = () => {
           delay: 1,
         }}
       />
+
+      {/* Deep blue gradient orb */}
       <motion.div
-        className="absolute right-[20%] bottom-[20%] h-[300px] w-[300px] rounded-full bg-blue-200 opacity-40 blur-[60px]"
+        className="absolute right-[20%] bottom-[20%] h-[300px] w-[300px] rounded-full bg-[#1E40AF] opacity-30 blur-[60px]"
         style={{ 
           x: useTransform(parallaxX, v => v * 0.5), 
           y: useTransform(scrollY, [0, 1000], [0, 200]) 
         }}
         animate={{
           scale: [1, 1.3, 1],
-          opacity: [0.4, 0.5, 0.4],
+          opacity: [0.3, 0.4, 0.3],
         }}
         transition={{
           duration: 12,
