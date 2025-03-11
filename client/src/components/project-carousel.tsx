@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -22,6 +22,13 @@ export const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: true,
+    draggable: true,
+    speed: 20,
+    autoplay: {
+      delay: 4000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    },
   });
 
   const scrollPrev = useCallback(() => {
@@ -30,6 +37,15 @@ export const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
 
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  // Start autoplay when component mounts
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.on('select', () => {
+        emblaApi.scrollNext();
+      });
+    }
   }, [emblaApi]);
 
   return (
@@ -48,7 +64,7 @@ export const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
           ))}
         </div>
       </div>
-      
+
       <Button
         variant="outline"
         size="icon"
@@ -57,7 +73,7 @@ export const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      
+
       <Button
         variant="outline"
         size="icon"
