@@ -1,8 +1,8 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Html } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Sphere, OrbitControls } from '@react-three/drei';
 
 // Define skill type
 interface Skill3D {
@@ -21,37 +21,35 @@ const skills3d: Skill3D[] = [
   { name: "Express", level: 85, color: "#000000" },
 ];
 
-// Component for each skill sphere
-const SkillSphere: React.FC<{ skill: Skill3D }> = ({ skill }) => {
-  // Calculate random position
-  const position = [
-    (Math.random() - 0.5) * 5,
-    (Math.random() - 0.5) * 5,
-    (Math.random() - 0.5) * 5
-  ] as [number, number, number];
-
+// Simpler sphere component
+const SkillSphere = ({ index, skill }: { index: number, skill: Skill3D }) => {
+  const ref = useRef<THREE.Mesh>(null);
+  
+  // Calculate position based on index to create a circular pattern
+  const angle = (index / skills3d.length) * Math.PI * 2;
+  const radius = 3;
+  const x = Math.cos(angle) * radius;
+  const z = Math.sin(angle) * radius;
+  const y = Math.sin(index * 0.5) * 0.5; // Small vertical variation
+  
   // Scale based on skill level
   const scale = 0.5 + (skill.level / 100) * 0.5;
+  
+  // Simple animation
+  useFrame((state) => {
+    if (ref.current) {
+      ref.current.position.y = y + Math.sin(state.clock.elapsedTime * 0.5 + index) * 0.3;
+      ref.current.rotation.y += 0.01;
+    }
+  });
 
   return (
-    <mesh position={position} scale={scale}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color={skill.color} />
-      <Html position={[0, 1.5, 0]} center distanceFactor={10}>
-        <div style={{
-          fontSize: '12px',
-          padding: '6px',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          borderRadius: '4px',
-          color: 'white',
-          textAlign: 'center',
-          pointerEvents: 'none',
-          width: 'max-content'
-        }}>
-          {skill.name}
-        </div>
-      </Html>
-    </mesh>
+    <group>
+      <Sphere ref={ref} args={[scale, 16, 16]} position={[x, y, z]}>
+        <meshStandardMaterial color={skill.color} />
+      </Sphere>
+      {/* Text labels are removed to simplify */}
+    </group>
   );
 };
 
@@ -68,9 +66,8 @@ const SkillsScene: React.FC = () => {
         minPolarAngle={Math.PI / 4}
         maxPolarAngle={Math.PI * 3/4}
       />
-      <PerspectiveCamera makeDefault position={[0, 0, 8]} />
       {skills3d.map((skill, index) => (
-        <SkillSphere key={index} skill={skill} />
+        <SkillSphere key={index} index={index} skill={skill} />
       ))}
     </>
   );
@@ -85,7 +82,7 @@ const Skills3D: React.FC = () => {
       transition={{ duration: 1 }}
       className="w-full h-[500px] rounded-xl overflow-hidden"
     >
-      <Canvas dpr={[1, 2]} shadows>
+      <Canvas>
         <SkillsScene />
       </Canvas>
     </motion.div>
