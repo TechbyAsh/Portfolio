@@ -37,15 +37,19 @@ export const ContactForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-white p-8 rounded-2xl shadow-[20px_20px_60px_#bebebe,-20px_-20px_60px_#ffffff]">
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className="text-base">Name</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input 
+                  placeholder="Your name" 
+                  {...field} 
+                  className="shadow-[inset_3px_3px_6px_#b8b9be,inset_-3px_-3px_6px_#fff] border-none bg-gray-50 focus:shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#fff] transition-shadow"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,9 +60,14 @@ export const ContactForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-base">Email</FormLabel>
               <FormControl>
-                <Input placeholder="your@email.com" type="email" {...field} />
+                <Input 
+                  placeholder="your@email.com" 
+                  type="email" 
+                  {...field} 
+                  className="shadow-[inset_3px_3px_6px_#b8b9be,inset_-3px_-3px_6px_#fff] border-none bg-gray-50 focus:shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#fff] transition-shadow"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,11 +78,11 @@ export const ContactForm = () => {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel className="text-base">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell me about your project..."
-                  className="min-h-[150px]"
+                  className="min-h-[150px] shadow-[inset_3px_3px_6px_#b8b9be,inset_-3px_-3px_6px_#fff] border-none bg-gray-50 focus:shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#fff] transition-shadow"
                   {...field}
                 />
               </FormControl>
@@ -81,7 +90,10 @@ export const ContactForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button 
+          type="submit" 
+          className="w-full bg-primary shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff] hover:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.2)] transition-shadow"
+        >
           Send Message
         </Button>
       </form>

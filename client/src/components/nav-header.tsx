@@ -9,7 +9,7 @@ export const NavHeader = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <nav className="container mx-auto px-4 py-4 flex items-center justify-between bg-white/80 rounded-b-2xl shadow-[0_8px_30px_rgb(0,0,0,0.05)] backdrop-blur-sm">
         <Link href="/">
           <a className="hover:opacity-80 transition-opacity">
             <img 
@@ -21,13 +21,13 @@ export const NavHeader = () => {
         </Link>
         <div className="flex gap-8">
           <Link href="#about">
-            <a className="hover:opacity-80 transition-opacity">About</a>
+            <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">About</a>
           </Link>
           <Link href="#projects">
-            <a className="hover:opacity-80 transition-opacity">Projects</a>
+            <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">Projects</a>
           </Link>
           <Link href="#contact">
-            <a className="hover:opacity-80 transition-opacity">Contact</a>
+            <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">Contact</a>
           </Link>
         </div>
       </nav>
