@@ -59,7 +59,6 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 relative"
         >
-          {/* Animated background elements */}
           <motion.div 
             className="absolute -z-10 w-64 h-64 rounded-full bg-primary/5 top-0 left-1/4 blur-3xl"
             animate={{ 
@@ -89,7 +88,6 @@ export default function Home() {
             }}
           />
 
-          {/* Main content with staggered animations */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -153,17 +151,6 @@ export default function Home() {
         </motion.section>
 
         <motion.section
-          id="about"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mb-20"
-        >
-          <h2 className="text-3xl font-bold mb-10 text-center">About Me</h2>
-          <AboutMe />
-        </motion.section>
-
-        <motion.section
           id="projects"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -187,7 +174,6 @@ export default function Home() {
           className="mb-20"
         >
           <h2 className="text-3xl font-bold mb-10 text-center">Technical Skills</h2>
-          {/* Skills section */}
           <section className="py-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -203,7 +189,6 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* 3D Skills Visualization */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -219,9 +204,19 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Regular Skills Progress Bars */}
             <SkillProgress />
           </section>
+        </motion.section>
+
+        <motion.section
+          id="about"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mb-20"
+        >
+          <h2 className="text-3xl font-bold mb-10 text-center">About Me</h2>
+          <AboutMe />
         </motion.section>
 
         <motion.section
