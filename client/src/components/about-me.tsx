@@ -85,15 +85,15 @@ export const AboutMe = () => {
                 <motion.div
                   className="absolute inset-0 flex items-center justify-center"
                   initial={{ y: 10 }}
-                  animate={{ y: [-5, 5, -5] }}
+                  animate={{ y: [-8, 8, -8] }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
                 >
-                  {/* Replace this with the black girl avatar emoji or custom SVG */}
-                  <span className="text-7xl">👩🏾‍💻</span>
+                  {/* Black girl avatar emoji */}
+                  <span className="text-8xl scale-125">👩🏾‍💻</span>
                 </motion.div>
 
                 {/* Animated sparkles */}
