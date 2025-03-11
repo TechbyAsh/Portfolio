@@ -1,71 +1,62 @@
-import React from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { motion } from "framer-motion";
 
-// Define the skill type
-interface Skill {
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, PerspectiveCamera, Html } from '@react-three/drei';
+
+// Define skill type
+interface Skill3D {
   name: string;
   level: number;
   color: string;
 }
 
-// Sample 3D skills data
-const skills3d: Skill[] = [
+// Define skills for 3D visualization
+const skills3d: Skill3D[] = [
   { name: "React", level: 90, color: "#61DAFB" },
   { name: "TypeScript", level: 85, color: "#3178C6" },
-  { name: "Node.js", level: 80, color: "#339933" },
-  { name: "CSS/SCSS", level: 85, color: "#1572B6" },
-  { name: "React Native", level: 75, color: "#61DAFB" },
-  { name: "GraphQL", level: 70, color: "#E10098" },
-  { name: "UI/UX", level: 80, color: "#FF61F6" },
-  { name: "Mobile Dev", level: 85, color: "#4285F4" }
+  { name: "Tailwind CSS", level: 88, color: "#06B6D4" },
+  { name: "Framer Motion", level: 82, color: "#BB22AA" },
+  { name: "Node.js", level: 87, color: "#339933" },
+  { name: "Express", level: 85, color: "#000000" },
 ];
 
-// Individual skill sphere component
-const SkillSphere = ({ skill }: { skill: Skill }) => {
+// Component for each skill sphere
+const SkillSphere: React.FC<{ skill: Skill3D }> = ({ skill }) => {
+  // Calculate random position
   const position = [
     (Math.random() - 0.5) * 5,
     (Math.random() - 0.5) * 5,
     (Math.random() - 0.5) * 5
   ] as [number, number, number];
 
+  // Scale based on skill level
   const scale = 0.5 + (skill.level / 100) * 0.5;
 
   return (
     <mesh position={position} scale={scale}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial color={skill.color} />
-      <SkillLabel position={[0, 1.5, 0]}>
-        {skill.name}
-      </SkillLabel>
+      <Html position={[0, 1.5, 0]} center distanceFactor={10}>
+        <div style={{
+          fontSize: '12px',
+          padding: '6px',
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          borderRadius: '4px',
+          color: 'white',
+          textAlign: 'center',
+          pointerEvents: 'none',
+          width: 'max-content'
+        }}>
+          {skill.name}
+        </div>
+      </Html>
     </mesh>
   );
 };
 
-// Import HTML component from drei instead of creating our own
-import { Html as DreiHtml } from "@react-three/drei";
-
-// Use the drei HTML component which is compatible with R3F
-const SkillLabel = ({ children, position }: any) => {
-  return (
-    <DreiHtml position={position} center distanceFactor={10}>
-      <div className="skill-label" style={{
-        fontSize: '12px',
-        padding: '6px',
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        borderRadius: '4px',
-        color: 'white',
-        textAlign: 'center',
-        pointerEvents: 'none'
-      }}>
-        {children}
-      </div>
-    </DreiHtml>
-  );
-};
-
-const SkillsScene = () => {
+// Main scene component
+const SkillsScene: React.FC = () => {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -78,14 +69,15 @@ const SkillsScene = () => {
         maxPolarAngle={Math.PI * 3/4}
       />
       <PerspectiveCamera makeDefault position={[0, 0, 8]} />
-      {skills3d.map((skill) => (
-        <SkillSphere key={skill.name} skill={skill} />
+      {skills3d.map((skill, index) => (
+        <SkillSphere key={index} skill={skill} />
       ))}
     </>
   );
 };
 
-const Skills3D = () => {
+// Main component export
+const Skills3D: React.FC = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -93,7 +85,7 @@ const Skills3D = () => {
       transition={{ duration: 1 }}
       className="w-full h-[500px] rounded-xl overflow-hidden"
     >
-      <Canvas>
+      <Canvas dpr={[1, 2]} shadows>
         <SkillsScene />
       </Canvas>
     </motion.div>
