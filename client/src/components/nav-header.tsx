@@ -26,8 +26,8 @@ export const NavHeader = () => {
           <Link href="#projects">
             <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">Projects</a>
           </Link>
-          <Link href="#skills">
-            <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">Skills</a>
+          <Link href="/work-with-me">
+            <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">Work with Me</a>
           </Link>
           <Link href="#contact">
             <a className="px-4 py-2 rounded-lg hover:shadow-[inset_3px_3px_6px_#b8b9be,-3px_-3px_6px_#fff] transition-shadow">Contact</a>
