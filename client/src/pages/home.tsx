@@ -8,7 +8,6 @@ import { NavHeader } from "@/components/nav-header";
 import { SkillProgress } from "@/components/skill-progress";
 import Skills3D from "@/components/skills-3d";
 
-
 const projects = [
   {
     id: 1,
@@ -201,8 +200,10 @@ export default function Home() {
               className="mb-16"
             >
               <h3 className="text-xl font-medium text-center mb-6">Interactive Skills Globe</h3>
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-4 rounded-xl shadow-xl">
-                <Skills3D />
+              <div className="backdrop-blur-md bg-white/30 p-8 rounded-2xl shadow-[0_8px_32px_rgba(31,38,135,0.37)] border border-white/20">
+                <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 p-4 rounded backdrop-blur-sm border border-slate-700/50 shadow-lg">
+                  <Skills3D />
+                </div>
               </div>
             </motion.div>
 

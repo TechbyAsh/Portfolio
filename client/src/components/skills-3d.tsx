@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
@@ -22,19 +21,19 @@ const skills: Skill[] = [
 // Animated skill bubble component
 const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  
+
   // Set a random initial position based on index
   useEffect(() => {
     const angle = (index / skills.length) * Math.PI * 2;
-    const radius = 150;
+    const radius = Math.min(window.innerWidth * 0.15, 150); // Responsive radius
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
     setPosition({ x, y });
   }, [index]);
-  
+
   // Calculate the size based on skill level (50px to 80px)
   const size = 50 + (skill.level / 100) * 30;
-  
+
   return (
     <motion.div
       className="absolute flex items-center justify-center rounded-full font-semibold text-xs sm:text-sm md:text-base cursor-pointer shadow-lg"
@@ -85,18 +84,18 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
 function getContrastYIQ(hexcolor: string): string {
   // If hexcolor is black, return white
   if (hexcolor === "#000000") return "#FFFFFF";
-  
+
   // Remove # if present
   hexcolor = hexcolor.replace("#", "");
-  
+
   // Convert to RGB
   const r = parseInt(hexcolor.substr(0, 2), 16);
   const g = parseInt(hexcolor.substr(2, 2), 16);
   const b = parseInt(hexcolor.substr(4, 2), 16);
-  
+
   // Calculate YIQ ratio
   const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-  
+
   // Return black or white depending on YIQ ratio
   return (yiq >= 128) ? '#000000' : '#FFFFFF';
 }
