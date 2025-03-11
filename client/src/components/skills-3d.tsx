@@ -25,8 +25,8 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
   // Set a random initial position based on index
   useEffect(() => {
     const angle = (index / skills.length) * Math.PI * 2;
-    const radius = Math.min(window.innerWidth * 0.12, 120); // Slightly reduced radius
-    const centerOffsetX = 40; // Add padding to the right by offsetting the center
+    const radius = Math.min(window.innerWidth * 0.12, 120);
+    const centerOffsetX = -40; // Add padding to the left by offsetting the center
     const x = Math.cos(angle) * radius + centerOffsetX;
     const y = Math.sin(angle) * radius;
     setPosition({ x, y });
