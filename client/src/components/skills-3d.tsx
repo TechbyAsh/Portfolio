@@ -25,7 +25,7 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
   // Set a random initial position based on index
   useEffect(() => {
     const angle = (index / skills.length) * Math.PI * 2;
-    const radius = Math.min(window.innerWidth * 0.12, 120);
+    const radius = Math.min(window.innerWidth * 0.15, 150); // Increased radius
     const centerOffsetX = -40; // Add padding to the left by offsetting the center
     const x = Math.cos(angle) * radius + centerOffsetX;
     const y = Math.sin(angle) * radius;
@@ -49,11 +49,11 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
         zIndex: Math.floor(skill.level / 10)
       }}
       initial={{ opacity: 0, scale: 0 }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         scale: 1,
-        x: [0, Math.random() * 20 - 10],
-        y: [0, Math.random() * 20 - 10],
+        x: [0, Math.random() * 30 - 15], // Increased movement range
+        y: [0, Math.random() * 30 - 15], // Increased movement range
       }}
       transition={{
         duration: 0.5,
@@ -71,7 +71,7 @@ const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }
           ease: "easeInOut"
         }
       }}
-      whileHover={{ 
+      whileHover={{
         scale: 1.1,
         boxShadow: "0px 0px 15px rgba(0,0,0,0.3)"
       }}
