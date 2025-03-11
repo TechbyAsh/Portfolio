@@ -5,6 +5,7 @@ import { ProjectCarousel } from "@/components/project-carousel";
 import { CaseStudy } from "@/components/case-study";
 import { ContactForm } from "@/components/contact-form";
 import { NavHeader } from "@/components/nav-header";
+import { SkillProgress } from "@/components/skill-progress";
 
 const projects = [
   {
@@ -77,6 +78,17 @@ export default function Home() {
               onClick: () => setSelectedProject(project)
             }))}
           />
+        </motion.section>
+
+        <motion.section
+          id="skills"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-20"
+        >
+          <h2 className="text-3xl font-bold mb-10 text-center">Technical Skills</h2>
+          <SkillProgress />
         </motion.section>
 
         <motion.section
