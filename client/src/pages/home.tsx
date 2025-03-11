@@ -52,20 +52,102 @@ export default function Home() {
 
       <main className="container mx-auto px-4 pt-32">
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20 relative"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Crafting Beautiful
-            <br />
-            Mobile Experiences
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            I'm a mobile app developer passionate about creating thoughtful and visually stunning
-            digital experiences that users love.
-          </p>
+          {/* Animated background elements */}
+          <motion.div 
+            className="absolute -z-10 w-64 h-64 rounded-full bg-primary/5 top-0 left-1/4 blur-3xl"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+              rotate: [0, 15, 0]
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity,
+              ease: "easeInOut" 
+            }}
+          />
+          
+          <motion.div 
+            className="absolute -z-10 w-72 h-72 rounded-full bg-blue-500/5 bottom-0 right-1/4 blur-3xl"
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              opacity: [0.4, 0.2, 0.4],
+              rotate: [0, -15, 0]
+            }}
+            transition={{ 
+              duration: 10, 
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
+          
+          {/* Main content with staggered animations */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <motion.h1 
+              className="text-4xl md:text-6xl font-bold mb-6 inline-block"
+              initial={{ y: 50 }}
+              animate={{ y: 0 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                delay: 0.3
+              }}
+            >
+              <motion.span 
+                className="inline-block"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              >
+                Crafting Beautiful
+              </motion.span>
+              <br />
+              <motion.span 
+                className="inline-block bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+              >
+                Mobile Experiences
+              </motion.span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+            >
+              I'm a mobile app developer passionate about creating thoughtful and visually stunning
+              digital experiences that users love.
+            </motion.p>
+            
+            <motion.div
+              className="mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 0.8 }}
+            >
+              <motion.button
+                className="px-6 py-3 bg-primary text-white rounded-full font-medium shadow-lg hover:shadow-primary/25 transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                View My Work
+              </motion.button>
+            </motion.div>
+          </motion.div>
         </motion.section>
 
         <motion.section
