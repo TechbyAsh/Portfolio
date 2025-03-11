@@ -21,6 +21,8 @@ const projects = [
       "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
       "https://images.unsplash.com/photo-1576678927484-cc907957088c",
     ],
+    techStack: ["React Native", "TypeScript", "Node.js", "MongoDB", "Firebase"],
+    mockupImage: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
   },
   {
     id: 2,
@@ -35,6 +37,8 @@ const projects = [
       "https://images.unsplash.com/photo-1576678927484-cc907957088c",
       "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
     ],
+    techStack: ["Flutter", "Dart", "Express.js", "PostgreSQL", "WebSocket"],
+    mockupImage: "https://images.unsplash.com/photo-1576678927484-cc907957088c",
   },
 ];
 
@@ -113,6 +117,8 @@ export default function Home() {
           solution={selectedProject.solution}
           results={selectedProject.results}
           images={selectedProject.gallery}
+          techStack={selectedProject.techStack}
+          mockupImage={selectedProject.mockupImage}
         />
       )}
     </div>
