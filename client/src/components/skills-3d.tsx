@@ -1,18 +1,16 @@
 
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas, useFrame, extend } from '@react-three/fiber';
-import * as THREE from 'three';
 
 // Define skill type
-interface Skill3D {
+interface Skill {
   name: string;
   level: number;
   color: string;
 }
 
-// Define skills for 3D visualization
-const skills3d: Skill3D[] = [
+// Define skills
+const skills: Skill[] = [
   { name: "React", level: 90, color: "#61DAFB" },
   { name: "TypeScript", level: 85, color: "#3178C6" },
   { name: "Tailwind CSS", level: 88, color: "#06B6D4" },
@@ -21,67 +19,87 @@ const skills3d: Skill3D[] = [
   { name: "Express", level: 85, color: "#000000" },
 ];
 
-// Simple sphere component without using drei
-const SkillSphere = ({ index, skill }: { index: number; skill: Skill3D }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+// Animated skill bubble component
+const SkillBubble: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   
-  // Calculate position based on index to spread skills in a circle
-  const radius = 3;
-  const angle = (index / skills3d.length) * Math.PI * 2;
-  const x = Math.cos(angle) * radius;
-  const z = Math.sin(angle) * radius;
+  // Set a random initial position based on index
+  useEffect(() => {
+    const angle = (index / skills.length) * Math.PI * 2;
+    const radius = 150;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    setPosition({ x, y });
+  }, [index]);
   
-  // Animation
-  useFrame((state) => {
-    if (meshRef.current) {
-      // Simple hover animation
-      meshRef.current.position.y = Math.sin(state.clock.getElapsedTime() + index) * 0.3;
-      // Rotate each sphere
-      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
-    }
-  });
-
-  // Scale based on skill level
-  const scale = 0.3 + (skill.level / 100) * 0.3;
-
+  // Calculate the size based on skill level (50px to 80px)
+  const size = 50 + (skill.level / 100) * 30;
+  
   return (
-    <mesh 
-      ref={meshRef} 
-      position={[x, 0, z]} 
-      scale={[scale, scale, scale]}
+    <motion.div
+      className="absolute flex items-center justify-center rounded-full font-semibold text-xs sm:text-sm md:text-base cursor-pointer shadow-lg"
+      style={{
+        backgroundColor: skill.color,
+        color: getContrastYIQ(skill.color),
+        width: size,
+        height: size,
+        left: `calc(50% + ${position.x}px)`,
+        top: `calc(50% + ${position.y}px)`,
+        transform: 'translate(-50%, -50%)',
+        zIndex: Math.floor(skill.level / 10)
+      }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ 
+        opacity: 1, 
+        scale: 1,
+        x: [0, Math.random() * 20 - 10],
+        y: [0, Math.random() * 20 - 10],
+      }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.1,
+        x: {
+          duration: 2 + Math.random() * 2,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        },
+        y: {
+          duration: 3 + Math.random() * 2,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }
+      }}
+      whileHover={{ 
+        scale: 1.1,
+        boxShadow: "0px 0px 15px rgba(0,0,0,0.3)"
+      }}
     >
-      <sphereGeometry args={[1, 16, 16]} />
-      <meshStandardMaterial color={skill.color} roughness={0.3} metalness={0.8} />
-    </mesh>
+      {skill.name}
+    </motion.div>
   );
 };
 
-// Main scene component with lighting and controls
-const SkillsScene: React.FC = () => {
-  const groupRef = useRef<THREE.Group>(null);
+// Helper function to determine text color based on background color
+function getContrastYIQ(hexcolor: string): string {
+  // If hexcolor is black, return white
+  if (hexcolor === "#000000") return "#FFFFFF";
   
-  useFrame((state) => {
-    if (groupRef.current) {
-      // Slowly rotate the entire group of spheres
-      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.1;
-    }
-  });
-
-  return (
-    <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <directionalLight position={[-5, 5, 5]} intensity={0.5} />
-      
-      <group ref={groupRef}>
-        {skills3d.map((skill, index) => (
-          <SkillSphere key={index} index={index} skill={skill} />
-        ))}
-      </group>
-    </>
-  );
-};
+  // Remove # if present
+  hexcolor = hexcolor.replace("#", "");
+  
+  // Convert to RGB
+  const r = parseInt(hexcolor.substr(0, 2), 16);
+  const g = parseInt(hexcolor.substr(2, 2), 16);
+  const b = parseInt(hexcolor.substr(4, 2), 16);
+  
+  // Calculate YIQ ratio
+  const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  
+  // Return black or white depending on YIQ ratio
+  return (yiq >= 128) ? '#000000' : '#FFFFFF';
+}
 
 // Main component export
 const Skills3D: React.FC = () => {
@@ -90,11 +108,14 @@ const Skills3D: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="w-full h-[500px] rounded-xl overflow-hidden bg-gray-900"
+      className="w-full h-[500px] rounded-xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 relative"
     >
-      <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
-        <SkillsScene />
-      </Canvas>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-2xl md:text-3xl font-bold text-white/20">My Skills</div>
+      </div>
+      {skills.map((skill, index) => (
+        <SkillBubble key={index} skill={skill} index={index} />
+      ))}
     </motion.div>
   );
 };
