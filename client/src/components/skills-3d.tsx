@@ -1,93 +1,72 @@
+import React from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { motion } from "framer-motion";
 
-import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, Float, PerspectiveCamera, OrbitControls } from '@react-three/drei';
-import { motion } from 'framer-motion';
-import { Vector3, MathUtils } from 'three';
-import { SiReact, SiTypescript, SiTailwindcss, SiFramer, SiNodedotjs, SiExpress } from "react-icons/si";
-
-// Define the skill data structure
-interface Skill3D {
+// Define the skill type
+interface Skill {
   name: string;
-  level: number; // 0-100
+  level: number;
   color: string;
-  position: [number, number, number];
 }
 
-// Our skills array with position information for 3D space
-const skills3d: Skill3D[] = [
-  { name: "React", level: 90, color: "#61DAFB", position: [0, 0, 0] },
-  { name: "TypeScript", level: 85, color: "#3178C6", position: [-2, 1, -1] },
-  { name: "Tailwind CSS", level: 88, color: "#06B6D4", position: [2, -1, -1] },
-  { name: "Framer Motion", level: 82, color: "#BB22AA", position: [-1, -2, 1] },
-  { name: "Node.js", level: 87, color: "#339933", position: [1, 2, 1] },
-  { name: "Express", level: 85, color: "#000000", position: [0, -1, 2] },
+// Sample 3D skills data
+const skills3d: Skill[] = [
+  { name: "React", level: 90, color: "#61DAFB" },
+  { name: "TypeScript", level: 85, color: "#3178C6" },
+  { name: "Node.js", level: 80, color: "#339933" },
+  { name: "CSS/SCSS", level: 85, color: "#1572B6" },
+  { name: "React Native", level: 75, color: "#61DAFB" },
+  { name: "GraphQL", level: 70, color: "#E10098" },
+  { name: "UI/UX", level: 80, color: "#FF61F6" },
+  { name: "Mobile Dev", level: 85, color: "#4285F4" }
 ];
 
-// A single skill sphere component
-const SkillSphere = ({ skill }: { skill: Skill3D }) => {
-  const { name, level, color, position } = skill;
-  const meshRef = useRef<THREE.Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-  
-  // Calculate size based on skill level (0.5 to 1.2)
-  const size = MathUtils.mapLinear(level, 0, 100, 0.5, 1.2);
-  
-  // Add subtle animation to each sphere
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = meshRef.current.rotation.y += 0.004;
-      
-      // Add subtle floating motion
-      const time = state.clock.getElapsedTime();
-      meshRef.current.position.y = position[1] + Math.sin(time * 0.5) * 0.1;
-    }
-  });
+// Individual skill sphere component
+const SkillSphere = ({ skill }: { skill: Skill }) => {
+  const position = [
+    (Math.random() - 0.5) * 5,
+    (Math.random() - 0.5) * 5,
+    (Math.random() - 0.5) * 5
+  ];
+
+  const scale = 0.5 + (skill.level / 100) * 0.5;
 
   return (
-    <Float
-      speed={2} // Animation speed
-      rotationIntensity={0.2} // Rotation intensity
-      floatIntensity={0.5} // Float intensity
-    >
-      <mesh
-        ref={meshRef}
-        position={new Vector3(...position)}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-      >
-        <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={hovered ? 0.5 : 0.2}
-          transparent
-          opacity={0.8}
-        />
-        <Text
-          position={[0, size + 0.3, 0]}
-          fontSize={0.3}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {name}
-        </Text>
-        <Text
-          position={[0, size - 0.3, 0]}
-          fontSize={0.2}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {level}%
-        </Text>
-      </mesh>
-    </Float>
+    <mesh position={position as [number, number, number]} scale={scale}>
+      <sphereGeometry args={[1, 32, 32]} />
+      <meshStandardMaterial color={skill.color} />
+      <Html distanceFactor={10}>
+        <div className="skill-label">
+          {skill.name}
+        </div>
+      </Html>
+    </mesh>
   );
 };
 
-// The scene component that holds all skill spheres
+// HTML content in 3D space
+const Html = ({ children, distanceFactor, position = [0, 0, 0], ...props }: any) => {
+  return (
+    <group position={position as [number, number, number]} {...props}>
+      <div className="html-content" style={{
+        position: 'absolute',
+        fontSize: '12px',
+        padding: '6px',
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        borderRadius: '4px',
+        color: 'white',
+        transform: `scale(${distanceFactor / 10})`,
+        transformOrigin: 'center center',
+        textAlign: 'center',
+        pointerEvents: 'none'
+      }}>
+        {children}
+      </div>
+    </group>
+  );
+};
+
 const SkillsScene = () => {
   return (
     <>
@@ -108,7 +87,7 @@ const SkillsScene = () => {
   );
 };
 
-export const Skills3D = () => {
+const Skills3D = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -122,3 +101,5 @@ export const Skills3D = () => {
     </motion.div>
   );
 };
+
+export default Skills3D;

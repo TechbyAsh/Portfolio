@@ -6,7 +6,7 @@ import { CaseStudy } from "@/components/case-study";
 import { ContactForm } from "@/components/contact-form";
 import { NavHeader } from "@/components/nav-header";
 import { SkillProgress } from "@/components/skill-progress";
-import Skills3D from "@/components/skills-3d"; // Assuming this component is defined elsewhere
+import Skills3D from "@/components/skills-3d";
 
 
 const projects = [
