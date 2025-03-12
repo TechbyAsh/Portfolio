@@ -198,7 +198,7 @@ export default function Home() {
           transition={{ delay: 0.3 }}
           className="mb-20"
         >
-          <h2 className="text-3xl font-bold mb-10 text-center">Technical Skills</h2>
+          
           <section className="py-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
