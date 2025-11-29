@@ -1,275 +1,161 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { Link } from "wouter";
 import { GradientBackground } from "@/components/ui/gradient-background";
-import { ProjectCarousel } from "@/components/project-carousel";
-import { CaseStudy } from "@/components/case-study";
-import { ContactForm } from "@/components/contact-form";
-import { NavHeader } from "@/components/nav-header";
-import { SkillProgress } from "@/components/skill-progress";
-import Skills3D from "@/components/skills-3d";
-import { AboutMe } from "@/components/about-me";
-
-const projects = [
-  {
-    id: 1,
-    title: "Health & Fitness App",
-    description: "A comprehensive fitness tracking application with personalized workout plans",
-    image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
-    category: "Mobile App Development",
-    challenge: "Creating an intuitive user experience for tracking workouts and nutrition",
-    solution: "Implemented a clean, gesture-based interface with real-time progress tracking",
-    results: "300% increase in user engagement and 4.8/5 App Store rating",
-    gallery: [
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-    ],
-    techStack: ["React Native", "TypeScript", "Node.js", "MongoDB", "Firebase"],
-    mockupImage: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
-  },
-  {
-    id: 2,
-    title: "Food Delivery Platform",
-    description: "Real-time food ordering and delivery tracking application",
-    image: "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-    category: "Mobile App Development",
-    challenge: "Building a reliable real-time order tracking system",
-    solution: "Developed a scalable backend with WebSocket integration",
-    results: "Processed over 100,000 orders in first month",
-    gallery: [
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2",
-    ],
-    techStack: ["Flutter", "Dart", "Express.js", "PostgreSQL", "WebSocket"],
-    mockupImage: "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-  },
-];
+import { Github, Linkedin, Mail, Twitter, ArrowRight } from "lucide-react";
 
 export default function Home() {
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
-
   return (
     <div className="min-h-screen">
       <GradientBackground />
-      <NavHeader />
+      
+      {/* Simple Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/">
+              <a className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text">
+                Ashley Johnson
+              </a>
+            </Link>
+            <div className="hidden md:flex items-center gap-8">
+              <Link href="/"><a className="text-gray-700 hover:text-primary transition-colors">Home</a></Link>
+              <Link href="/about"><a className="text-gray-700 hover:text-primary transition-colors">About Me</a></Link>
+              <Link href="/resume"><a className="text-gray-700 hover:text-primary transition-colors">Resume</a></Link>
+              <Link href="/portfolio"><a className="text-gray-700 hover:text-primary transition-colors">Portfolio</a></Link>
+              <Link href="/contact"><a className="text-gray-700 hover:text-primary transition-colors">Contact</a></Link>
+            </div>
+            <Link href="/contact">
+              <a className="hidden md:block px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                I'm available
+              </a>
+            </Link>
+          </div>
+        </div>
+      </nav>
 
-      <main className="container mx-auto px-4 pt-32">
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20 relative"
-        >
-          <motion.div 
-            className="absolute -z-10 w-64 h-64 rounded-full bg-primary/5 top-0 left-1/4 blur-3xl"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-              rotate: [0, 15, 0]
-            }}
-            transition={{ 
-              duration: 8, 
-              repeat: Infinity,
-              ease: "easeInOut" 
-            }}
-          />
+      <main className="container mx-auto px-6 pt-32 pb-20">
+        {/* Hero Section */}
+        <section className="text-center mb-32">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+            Hello and welcome!
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            My name is <span className="font-semibold bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text">Ashley Johnson</span> and I'm a Mobile App Developer based in [Your Location]. 
+            I'm passionate about creating thoughtful and visually stunning digital experiences that users love. 
+            I specialize in building beautiful, functional mobile applications that make a difference.
+          </p>
+        </section>
 
-          <motion.div 
-            className="absolute -z-10 w-72 h-72 rounded-full bg-blue-500/5 bottom-0 right-1/4 blur-3xl"
-            animate={{ 
-              scale: [1.2, 1, 1.2],
-              opacity: [0.4, 0.2, 0.4],
-              rotate: [0, -15, 0]
-            }}
-            transition={{ 
-              duration: 10, 
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            {/* Animated Logo */}
-            <motion.div
-              className="mb-8"
-              initial={{ scale: 0, rotate: -180, opacity: 0 }}
-              animate={{ scale: 1, rotate: 0, opacity: 1 }}
-              transition={{ 
-                duration: 1.2,
-                type: "spring",
-                stiffness: 100,
-                damping: 15
-              }}
-            >
-              <motion.img 
-                src="/assets/logo.png"
-                alt="Naomi Creates Logo"
-                className="h-32 w-auto mx-auto mb-6" 
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-                onError={(e) => {
-                  console.error('Logo failed to load');
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            </motion.div>
-
-            <motion.h1 
-              className="text-4xl md:text-6xl font-bold mb-6 inline-block"
-              initial={{ y: 50 }}
-              animate={{ y: 0 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 100,
-                damping: 15,
-                delay: 0.3
-              }}
-            >
-              <motion.span 
-                className="inline-block"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-              >
-                Crafting Beautiful
-              </motion.span>
-              <br />
-              <motion.span 
-                className="inline-block bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-              >
-                Mobile Experiences
-              </motion.span>
-            </motion.h1>
-
-            <motion.p 
-              className="text-xl text-muted-foreground max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-            >
-              I'm a mobile app developer passionate about creating thoughtful and visually stunning
-              digital experiences that users love.
-            </motion.p>
-
-            <motion.div
-              className="mt-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 0.8 }}
-            >
-              <motion.button
-                className="px-6 py-3 bg-primary text-white rounded-full font-medium shadow-lg hover:shadow-primary/25 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                View My Work
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        <motion.section
-          id="projects"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mb-20"
-        >
-          <h2 className="text-3xl font-bold mb-10 text-center">Featured Projects</h2>
-          <ProjectCarousel
-            projects={projects.map(project => ({
-              ...project,
-              onClick: () => setSelectedProject(project)
-            }))}
-          />
-        </motion.section>
-
-        <motion.section
-          id="skills"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mb-20"
-        >
-          
-          <section className="py-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl font-bold mb-4">Skills & Technologies</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                I've worked with a range of technologies in the mobile app development world,
-                from back-end to design.
+        {/* Card Grid */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {/* About Me Card */}
+          <Link href="/about">
+            <a className="group block p-8 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
+              <h2 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">
+                Know more about me
+              </h2>
+              <p className="text-gray-600 mb-6 text-lg">
+                Passionate developer. I love writing beautiful code and discussing innovative solutions.
               </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="mb-16"
-            >
-              <h3 className="text-xl font-medium text-center mb-6">Interactive Skills Globe</h3>
-              <div className="backdrop-blur-md bg-white/30 p-8 rounded-2xl shadow-[0_8px_32px_rgba(31,38,135,0.37)] border border-white/20">
-                <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 p-4 rounded backdrop-blur-sm border border-slate-700/50 shadow-lg">
-                  <Skills3D />
-                </div>
+              <div className="flex items-center text-primary font-medium">
+                Learn more <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </div>
-            </motion.div>
+            </a>
+          </Link>
 
-            <SkillProgress />
-          </section>
-        </motion.section>
+          {/* Resume Card */}
+          <Link href="/resume">
+            <a className="group block p-8 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
+              <h2 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">
+                View my resume
+              </h2>
+              <p className="text-gray-600 mb-6 text-lg">
+                Design and deliver innovative mobile solutions with cutting-edge technologies and best practices.
+              </p>
+              <div className="flex items-center text-primary font-medium">
+                View resume <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </a>
+          </Link>
 
-        <motion.section
-          id="about"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mb-20"
-        >
-          <h2 className="text-3xl font-bold mb-10 text-center">About Me</h2>
-          <AboutMe />
-        </motion.section>
+          {/* Portfolio Card */}
+          <Link href="/portfolio">
+            <a className="group block p-8 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
+              <h2 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">
+                Check out my work
+              </h2>
+              <p className="text-gray-600 mb-6 text-lg">
+                I focus my efforts on mobile app development, UI/UX design, and creating seamless user experiences.
+              </p>
+              <div className="flex items-center text-primary font-medium">
+                View portfolio <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </a>
+          </Link>
 
-        <motion.section
-          id="contact"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="max-w-xl mx-auto mb-20"
-        >
-          <h2 className="text-3xl font-bold mb-10 text-center">Get In Touch</h2>
-          <ContactForm />
-        </motion.section>
+          {/* Contact Card */}
+          <Link href="/contact">
+            <a className="group block p-8 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
+              <h2 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">
+                Contact me for your requirement
+              </h2>
+              <p className="text-gray-600 mb-6 text-lg">
+                Contact me if your requirement meets my knowledge and services. Let's build something amazing together.
+              </p>
+              <div className="flex items-center text-primary font-medium">
+                Get in touch <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </a>
+          </Link>
+        </div>
+
+        {/* Social Links Section */}
+        <section className="mt-32 text-center">
+          <h2 className="text-3xl font-bold mb-8">Connect with me</h2>
+          <div className="flex justify-center gap-6 flex-wrap">
+            <a 
+              href="https://linkedin.com/in/yourprofile" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all"
+            >
+              <Linkedin className="w-5 h-5" />
+              <span>View me on LinkedIn</span>
+            </a>
+            <a 
+              href="https://github.com/yourprofile" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all"
+            >
+              <Github className="w-5 h-5" />
+              <span>Follow me on GitHub</span>
+            </a>
+            <a 
+              href="https://twitter.com/yourprofile" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all"
+            >
+              <Twitter className="w-5 h-5" />
+              <span>Follow me on Twitter</span>
+            </a>
+            <a 
+              href="mailto:your.email@example.com"
+              className="flex items-center gap-2 px-6 py-3 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all"
+            >
+              <Mail className="w-5 h-5" />
+              <span>Email me</span>
+            </a>
+          </div>
+        </section>
       </main>
 
-      {selectedProject && (
-        <CaseStudy
-          open={!!selectedProject}
-          onClose={() => setSelectedProject(null)}
-          title={selectedProject.title}
-          description={selectedProject.description}
-          challenge={selectedProject.challenge}
-          solution={selectedProject.solution}
-          results={selectedProject.results}
-          images={selectedProject.gallery}
-          techStack={selectedProject.techStack}
-          mockupImage={selectedProject.mockupImage}
-        />
-      )}
+      {/* Simple Footer */}
+      <footer className="border-t border-gray-200 bg-white/50 backdrop-blur-sm py-8">
+        <div className="container mx-auto px-6 text-center text-gray-600">
+          <p>© {new Date().getFullYear()} Ashley Johnson. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
